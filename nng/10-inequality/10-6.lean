@@ -1,7 +1,5 @@
 theorem le_antisymm (a b : mynat) (hab : a ≤ b) (hba : b ≤ a) : a = b :=
-
 begin
-
 cases hab with c hc,
 cases hba with d hd,
 rw hc at hd,
@@ -13,11 +11,4 @@ rw h2 at hc,
 rw hc,
 rw add_zero,
 refl,
-
-
-
-
-
-
-
 end

@@ -1,8 +1,5 @@
 theorem mul_left_cancel (a b c : mynat) (ha : a ≠ 0) : a * b = a * c → b = c :=
-
-
 begin
-
 induction c with d hd generalizing b,
 intro a,
 rw mul_zero at a,
@@ -28,5 +25,4 @@ rw add_right_cancel_iff at h,
 have h1 := hd(b),
 apply h1,
 exact h,
-
 end

@@ -1,7 +1,5 @@
 lemma add_comm (a b : mynat) : a + b = b + a :=
-
 begin
-
 induction b with k hk,
 rw add_zero,
 rw zero_add,
@@ -10,6 +8,4 @@ rw add_succ,
 rw succ_add,
 rw hk,
 refl,
-
-
 end

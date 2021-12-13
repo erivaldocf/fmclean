@@ -6,12 +6,9 @@ example (P Q R S T U: Type)
 (k : S → T)
 (l : T → U)
 : U :=
-
 begin
-
 have q := h(p),
 have t := j(q),
 have u : U := l(t),
 exact u,
-
 end

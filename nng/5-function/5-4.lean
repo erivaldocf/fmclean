@@ -6,12 +6,9 @@ example (P Q R S T U: Type)
 (k : S → T)
 (l : T → U)
 : U :=
-
 begin
-
 apply l,
 apply j,
 apply h,
 exact p,
-
 end

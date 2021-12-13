@@ -1,7 +1,5 @@
 lemma and_or_distrib_left (P Q R : Prop) : P ∧ (Q ∨ R) ↔ (P ∧ Q) ∨ (P ∧ R) :=
-
 begin
-
 split,
 intro h,
 cases h with p q,
@@ -26,6 +24,4 @@ split,
 exact p,
 right,
 exact r,
-
-
 end

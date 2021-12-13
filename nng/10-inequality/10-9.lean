@@ -1,7 +1,5 @@
 theorem le_total (a b : mynat) : a ≤ b ∨ b ≤ a :=
-
 begin
-
 revert a,
 induction b with k hk,
 intro a,
@@ -18,5 +16,4 @@ exact h,
 right,
 apply succ_le_succ,
 exact h,
-
 end

@@ -1,7 +1,5 @@
 lemma lt_aux_two (a b : mynat) : succ a ≤ b → a ≤ b ∧ ¬ (b ≤ a) :=
-
 begin
-
 intro h,
 split,
 cases h with c hc,
@@ -30,5 +28,4 @@ rw add_one_eq_succ at h1,
 symmetry at h1,
 have h2 := succ_ne_zero (d + n),
 exact h2(h1),
-
 end

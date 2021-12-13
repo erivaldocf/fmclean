@@ -1,7 +1,5 @@
 lemma mul_one (m : mynat) : m * 1 = m :=
-
 begin
-
 induction m with k hk,
 rw zero_mul,
 refl,
@@ -10,5 +8,4 @@ rw mul_succ,
 rw mul_zero,
 rw zero_add,
 refl,
-
 end

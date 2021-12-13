@@ -1,7 +1,5 @@
 lemma lt_aux_one (a b : mynat) : a ≤ b ∧ ¬ (b ≤ a) → succ a ≤ b :=
-
 begin
-
 intro a,
 cases a with c hc,
 cases c with d hd,
@@ -19,10 +17,4 @@ rw hd,
 use n,
 rw succ_add,
 refl,
-
-
-
-
-
-
 end

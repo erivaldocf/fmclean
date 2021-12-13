@@ -3,9 +3,7 @@ example (A B C D E F G H I J K L : Type)
 (f6 : F → C) (f7 : B → C) (f8 : F → G) (f9 : G → J) (f10 : I → J)
 (f11 : J → I) (f12 : I → H) (f13 : E → H) (f14 : H → K) (f15 : I → L)
  : A → L :=
-
 begin
-
 intro a,
 apply f15,
 apply f11,
@@ -15,5 +13,4 @@ apply f5,
 apply f2,
 apply f1,
 exact a,
-
 end

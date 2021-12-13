@@ -1,7 +1,5 @@
 lemma mul_left_comm (a b c : mynat) : a * (b * c) = b * (a * c) :=
-
 begin
-
 induction c with k hk,
 rw mul_zero,
 rw mul_zero,
