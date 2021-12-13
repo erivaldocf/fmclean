@@ -1,3 +1,4 @@
+
 section propositional
 
 variables P Q R : Prop
@@ -110,7 +111,7 @@ begin
   intro p,
   have hq : Q := hpq p,
   apply q,
-  exact hq, 
+  exact hq,
 end
 
 theorem impl_as_contrapositive_converse :
@@ -132,6 +133,7 @@ begin
   intro p,
   have hq : Q := hpq p,
   contradiction,
+
   intros hqp p,
   by_cases hq : Q,
   exact hq,
@@ -147,11 +149,12 @@ end
 
 theorem lem_irrefutable :
   ¬¬(P∨¬P)  :=
-begin 
+begin
   intro hp,
   apply hp,
   right,
   intro p,
+
   have hpp : P ∨ ¬P,
   left,
   exact p,
@@ -206,7 +209,7 @@ end
 -- As leis de De Morgan para ∨,∧:
 ------------------------------------------------
 
-theorem demorgan_ndisj :
+theorem demorgan_disj :
   ¬(P∨Q) → (¬P ∧ ¬Q)  :=
 begin
   intro npq,
@@ -217,6 +220,7 @@ begin
   exact p,
   apply npq,
   exact hpq,
+
   intro q,
   have hpq : P ∨ Q,
   right,
@@ -224,7 +228,7 @@ begin
   contradiction,
 end
 
-theorem demorgan_ndisj_converse :
+theorem demorgan_disj_converse :
   (¬P ∧ ¬Q) → ¬(P∨Q)  :=
 begin
   intros npq p,
@@ -234,7 +238,24 @@ begin
   contradiction,
 end
 
-theorem demorgan_nconj_converse :
+theorem demorgan_conj :
+  ¬(P∧Q) → (¬Q ∨ ¬P)  :=
+begin
+  intro hpq,
+  by_contra nqp,
+  apply hpq,
+  split,
+  by_contra np,
+  apply nqp,
+  right,
+  exact np,
+  by_contra nq,
+  apply nqp,
+  left,
+  exact nq,
+end
+
+theorem demorgan_conj_converse :
   (¬Q ∨ ¬P) → ¬(P∧Q)  :=
 begin
   intros nqp,
@@ -246,6 +267,21 @@ begin
   contradiction,
 end
 
+theorem demorgan_conj_law :
+  ¬(P∧Q) ↔ (¬Q ∨ ¬P)  :=
+begin
+  split,
+  exact demorgan_conj P Q,
+  exact demorgan_conj_converse P Q,
+end
+
+theorem demorgan_disj_law :
+  ¬(P∨Q) ↔ (¬P ∧ ¬Q)  :=
+begin
+  split,
+  exact demorgan_disj P Q,
+  exact demorgan_disj_converse P Q,
+end
 
 ------------------------------------------------
 -- Proposições de distributividade dos ∨,∧:
@@ -269,7 +305,7 @@ end
 
 theorem distr_conj_disj_converse :
   (P∧Q)∨(P∧R) → P∧(Q∨R)  :=
-begin 
+begin
   intro hpqr,
   cases hpqr with hpq hpr,
   cases hpq with hp hq,
@@ -287,7 +323,7 @@ end
 
 theorem distr_disj_conj :
   P∨(Q∧R) → (P∨Q)∧(P∨R)  :=
-begin 
+begin
   intro hpqr,
   cases hpqr with hp hqr,
   split,
@@ -407,9 +443,9 @@ begin
   exact p,
 end
 
-theorem disj_idemp :
+theorem disj_idempot :
   (P∨P) ↔ P  :=
-begin 
+begin
   split,
   intro hpp,
   cases hpp with p hp,
@@ -436,35 +472,25 @@ variables P Q : U -> Prop
 -- As leis de De Morgan para ∃,∀:
 ------------------------------------------------
 
-theorem demorgan_exists_neg :
-  (∃x, ¬P x) → ¬(∀x, P x)  :=
-begin
-  intro np,
-  intro hp,
-  cases np with x px,
-  have hx := hp x,
-  contradiction,
-end
-
-theorem demorgan_neg_exists :
+theorem demorgan_exists :
   ¬(∃x, P x) → (∀x, ¬P x)  :=
 begin
-  intros hpx x px,
+  intros hpx u pu,
   apply hpx,
-  existsi x,
-  exact px, 
+  existsi u,
+  exact pu,
 end
 
-theorem demorgan_forall_neg :
+theorem demorgan_exists_converse :
   (∀x, ¬P x) → ¬(∃x, P x)  :=
 begin
-  intros hpx px,
-  cases px with u hpu,
-  have hx := hpx u,
-  contradiction,
+  intros npx hpx,
+  cases hpx with u pu,
+  apply npx,
+  exact pu,
 end
 
-theorem demorgan_neg_forall :
+theorem demorgan_forall :
   ¬(∀x, P x) → (∃x, ¬P x)  :=
 begin
   intro hpx,
@@ -477,20 +503,29 @@ begin
   exact npu,
 end
 
-theorem demorgan_exists_law :
-  (∃x, ¬P x) ↔ ¬(∀x, P x)  :=
-begin 
-  split,
-  exact demorgan_exists_neg U P,
-  exact demorgan_neg_forall U P,
+theorem demorgan_forall_converse :
+  (∃x, ¬P x) → ¬(∀x, P x)  :=
+begin
+  intros hpx px,
+  cases hpx with u pu,
+  have hx := px u,
+  contradiction,
 end
 
 theorem demorgan_forall_law :
-  (∀x, ¬P x) ↔ ¬(∃x, P x)  :=
-begin 
+  ¬(∀x, P x) ↔ (∃x, ¬P x)  :=
+begin
   split,
-  apply demorgan_forall_neg U P,
-  apply demorgan_neg_exists U P,
+  exact demorgan_forall U P,
+  exact demorgan_forall_converse U P,
+end
+
+theorem demorgan_exists_law :
+  ¬(∃x, P x) ↔ (∀x, ¬P x)  :=
+begin
+  split,
+  exact demorgan_exists U P,
+  exact demorgan_exists_converse U P,
 end
 
 
@@ -652,13 +687,11 @@ end
 theorem forall_disj_as_disj_forall :
   (∀x, P x ∨ Q x) → (∀x, P x) ∨ (∀x, Q x)  :=
 begin
-  sorry,
 end
 
 theorem exists_conj_as_conj_exists_converse :
   (∃x, P x) ∧ (∃x, Q x) → (∃x, P x ∧ Q x)  :=
 begin
-  sorry,
 end
 
 ---------------------------------------------- -/
